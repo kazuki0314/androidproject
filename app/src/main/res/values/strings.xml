@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ExpiryPal</string>
+    <string-array name="food_categories">
+        <item>Select Category</item>
+        <item>Dairy</item>
+        <item>Breads</item>
+        <item>Spreads</item>
+    </string-array>
+</resources>

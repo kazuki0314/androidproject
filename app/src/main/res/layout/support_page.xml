@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".MainActivity">
+
+    <ImageButton
+        android:id="@+id/spback"
+        android:layout_width="42dp"
+        android:layout_height="43dp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:contentDescription="NULL"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.018"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023"
+        app:srcCompat="@drawable/back_btn" />
+
+    <TextView
+        android:id="@+id/sptitle"
+        android:layout_width="303dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="54dp"
+        android:layout_marginTop="66dp"
+        android:layout_marginEnd="54dp"
+        android:layout_marginBottom="612dp"
+        android:fontFamily="@font/rammetto_one"
+        android:text="Support"
+        android:textAlignment="center"
+        android:textIsSelectable="false"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/spaddbt"
+        style="@style/Widget.Material3.Button"
+        android:layout_width="124dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="578dp"
+        android:layout_marginEnd="240dp"
+        android:layout_marginBottom="116dp"
+        android:backgroundTint="@color/white"
+        android:text="Add"
+        android:textColor="@color/black"
+        app:icon="@android:drawable/ic_menu_add"
+        app:iconTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editspname"
+        android:layout_width="304dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="57dp"
+        android:layout_marginBottom="543dp"
+        android:ems="10"
+        android:hint="Name"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/spatt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="559dp"
+        android:layout_marginEnd="284dp"
+        android:layout_marginBottom="153dp"
+        android:text="Attachement"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioButton
+        android:id="@+id/spradio"
+        android:layout_width="304dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="630dp"
+        android:layout_marginEnd="58dp"
+        android:layout_marginBottom="75dp"
+        android:text="Make sure your entry is correct"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editspEmailAddress"
+        android:layout_width="305dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="211dp"
+        android:layout_marginEnd="57dp"
+        android:layout_marginBottom="487dp"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/editsptext"
+        android:layout_width="304dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="401dp"
+        android:layout_marginEnd="58dp"
+        android:layout_marginBottom="290dp"
+        android:ems="10"
+        android:hint="Subject"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editspPhone"
+        android:layout_width="305dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="270dp"
+        android:layout_marginEnd="57dp"
+        android:layout_marginBottom="428dp"
+        android:ems="10"
+        android:hint="Phone Number"
+        android:inputType="phone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/sptel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="247dp"
+        android:layout_marginEnd="191dp"
+        android:layout_marginBottom="461dp"
+        android:fontFamily="@font/eb_garamond"
+        android:text="Phone number (Not Neccecary)"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spdrop1"
+        android:layout_width="305dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="330dp"
+        android:layout_marginEnd="57dp"
+        android:layout_marginBottom="359dp"
+        android:spinnerMode="dropdown"
+        android:splitMotionEvents="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/spcategorytext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="306dp"
+        android:layout_marginEnd="265dp"
+        android:layout_marginBottom="402dp"
+        android:fontFamily="@font/eb_garamond"
+        android:text="Problem Category"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/spsendbt"
+        style="@style/Widget.Material3.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="149dp"
+        android:layout_marginTop="656dp"
+        android:layout_marginEnd="155dp"
+        android:layout_marginBottom="27dp"
+        android:backgroundTint="#F1F8E9"
+        android:text="Send"
+        android:textColor="@color/black"
+        app:icon="@android:drawable/ic_menu_send"
+        app:iconTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/spmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="51dp"
+        android:layout_marginTop="188dp"
+        android:layout_marginEnd="325dp"
+        android:layout_marginBottom="520dp"
+        android:fontFamily="@font/eb_garamond"
+        android:text="E-mail"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/spsub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="379dp"
+        android:layout_marginEnd="322dp"
+        android:layout_marginBottom="330dp"
+        android:fontFamily="@font/eb_garamond"
+        android:text="Subject"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/spdes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="444dp"
+        android:layout_marginEnd="298dp"
+        android:layout_marginBottom="264dp"
+        android:fontFamily="@font/eb_garamond"
+        android:text="Description"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/spname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="124dp"
+        android:layout_marginEnd="328dp"
+        android:layout_marginBottom="584dp"
+        android:fontFamily="@font/eb_garamond"
+        android:text="Name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/editspMultiLine"
+        android:layout_width="304dp"
+        android:layout_height="88dp"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="467dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="176dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
