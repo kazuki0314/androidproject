@@ -5,5 +5,16 @@
         <item>Dairy</item>
         <item>Breads</item>
         <item>Spreads</item>
+        <item>Fruits</item>
+        <item>Vegetables</item>
+        <item>Meat and Poultry</item>
+        <item>Seafood</item>
+        <item>Grains and Cereals</item>
+        <item>Sweets and Desserts</item>
+        <item>Beverages</item>
+        <item>Canned and Packaged Foods</item>
+        <item>Condiments</item>
+        <item>Snacks</item>
+        <item>Others</item>
     </string-array>
 </resources>

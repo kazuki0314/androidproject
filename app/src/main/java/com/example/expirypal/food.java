@@ -1,5 +1,7 @@
 package com.example.expirypal;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -86,6 +88,15 @@ public class food extends AppCompatActivity {
                 startActivity(editFoodIntent);
             }
         });
+
+        // Set a long-press listener to delete food items
+        foodListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                showDeleteConfirmationDialog(position);
+                return true; // Consume the long-press event
+            }
+        });
     }
 
     @Override
@@ -136,5 +147,51 @@ public class food extends AppCompatActivity {
             adapter.addAll(foodItemsWithDetails);
             adapter.notifyDataSetChanged();
         }
+    }
+
+    private void showDeleteConfirmationDialog(final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Do you want to delete this item?")
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        deleteFoodItem(position);
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User canceled the deletion, so do nothing
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void deleteFoodItem(int position) {
+        // Get the selected food name from the adapter
+        String selectedFoodDetails = adapter.getItem(position);
+        String foodName = getFoodNameFromDetails(selectedFoodDetails);
+
+        // Delete the item from the database based on the food name
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int rowsDeleted = db.delete(DatabaseHelper.TABLE_NAME_FOODS, DatabaseHelper.COLUMN_FOODNAME + "=?", new String[]{foodName});
+        db.close();
+
+        if (rowsDeleted > 0) {
+            // Deletion was successful, refresh the food list
+            refreshFoodList();
+        }
+    }
+
+    private String getFoodNameFromDetails(String details) {
+        // Parse the food name from the food details string
+        String[] lines = details.split("\n");
+        if (lines.length > 0) {
+            String line = lines[0];
+            int colonIndex = line.indexOf(": ");
+            if (colonIndex >= 0 && colonIndex < line.length() - 2) {
+                return line.substring(colonIndex + 2);
+            }
+        }
+        return "";
     }
 }
