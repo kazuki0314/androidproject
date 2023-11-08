@@ -1,5 +1,7 @@
 package com.example.expirypal;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -10,15 +12,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class addfood extends AppCompatActivity {
-
+    // Declare the UI elements
     private EditText foodn, expdate, remdate, quanty, notes;
     private Spinner spinnerFoodCategory;
     private Button addfoodit;
@@ -28,14 +28,16 @@ public class addfood extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_food_items);
 
+        // Initialize UI elements by finding their respective views
         foodn = findViewById(R.id.etfoodn);
-        expdate = findViewById(R.id.editTextDate);
-        remdate = findViewById(R.id.editTextDate2);
-        quanty = findViewById(R.id.editTextNumber);
-        spinnerFoodCategory = findViewById(R.id.spinnerFoodCategory);
-        notes = findViewById(R.id.editTextText3);
+        expdate = findViewById(R.id.etexpidate);
+        remdate = findViewById(R.id.etremindt);
+        quanty = findViewById(R.id.etqty);
+        spinnerFoodCategory = findViewById(R.id.sfcategory);
+        notes = findViewById(R.id.etNote);
         addfoodit = findViewById(R.id.addfibtn);
 
+        // Create an ArrayAdapter for the food categories spinner
         ArrayAdapter<CharSequence> foodCategoryAdapter = ArrayAdapter.createFromResource(
                 this,
                 R.array.food_categories,
@@ -44,11 +46,26 @@ public class addfood extends AppCompatActivity {
         foodCategoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerFoodCategory.setAdapter(foodCategoryAdapter);
 
-        ImageButton addfoodback = findViewById(R.id.afiback);
+        // Set click listeners for the date input fields
+        expdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDatePickerDialog(expdate);
+            }
+        });
 
+        remdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDatePickerDialog(remdate);
+            }
+        });
+
+        // Set a click listener for the "Add" button
         addfoodit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Retrieve user input from the UI elements
                 String foodname = foodn.getText().toString();
                 String expDateStr = expdate.getText().toString();
                 String remDateStr = remdate.getText().toString();
@@ -56,27 +73,27 @@ public class addfood extends AppCompatActivity {
                 String category = spinnerFoodCategory.getSelectedItem().toString();
                 String note = notes.getText().toString();
 
-                long expDateMillis = parseDate(expDateStr);
-                long remDateMillis = parseDate(remDateStr);
-
-                if (expDateMillis == -1 || remDateMillis == -1) {
-                    showToast("Invalid date format. Please use yyyy-MM-dd.");
-                    return; // Don't proceed if date parsing fails.
+                // Check if the required fields are filled
+                if (foodname.isEmpty() || expDateStr.isEmpty() || remDateStr.isEmpty() || quantity.isEmpty() || category.equals("Select Category")) {
+                    showToast("Please fill in all required fields.");
+                    return;
                 }
 
+                // Open the database and insert food information
                 DatabaseHelper dbHelper = new DatabaseHelper(addfood.this);
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
 
                 ContentValues foodinfo = new ContentValues();
                 foodinfo.put(DatabaseHelper.COLUMN_FOODNAME, foodname);
-                foodinfo.put(DatabaseHelper.COLUMN_EDATE, expDateMillis);
-                foodinfo.put(DatabaseHelper.COLUMN_RDATE, remDateMillis);
+                foodinfo.put(DatabaseHelper.COLUMN_EDATE, expDateStr);
+                foodinfo.put(DatabaseHelper.COLUMN_RDATE, remDateStr);
                 foodinfo.put(DatabaseHelper.COLUMN_QUANTITY, quantity);
                 foodinfo.put(DatabaseHelper.COLUMN_CATEGORY, category);
                 foodinfo.put(DatabaseHelper.COLUMN_NOTE, note);
 
                 long newRowId = db.insert(DatabaseHelper.TABLE_NAME_FOODS, null, foodinfo);
 
+                // Show a toast message based on the insert result
                 if (newRowId != -1) {
                     showToast("Food item added successfully!");
                     finish();
@@ -84,10 +101,13 @@ public class addfood extends AppCompatActivity {
                     showToast("Failed to add food item.");
                 }
 
+                // Close the database connection
                 db.close();
             }
         });
 
+        // Set a click listener for the back button
+        ImageButton addfoodback = findViewById(R.id.afiback);
         addfoodback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,18 +116,28 @@ public class addfood extends AppCompatActivity {
         });
     }
 
+    // Show a toast message
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    private long parseDate(String dateStr) {
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = dateFormat.parse(dateStr);
-            return date != null ? date.getTime() : -1;
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return -1;
-        }
+    // Display the date picker dialog
+    private void showDatePickerDialog(final EditText editText) {
+        Calendar currentDate = Calendar.getInstance();
+        int year = currentDate.get(Calendar.YEAR);
+        int month = currentDate.get(Calendar.MONTH);
+        int day = currentDate.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, (view, selectedYear, selectedMonth, selectedDay) -> {
+            Calendar selectedDate = Calendar.getInstance();
+            selectedDate.set(selectedYear, selectedMonth, selectedDay);
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+            String formattedDate = dateFormat.format(selectedDate.getTime());
+
+            editText.setText(formattedDate);
+        }, year, month, day);
+
+        datePickerDialog.show();
     }
 }

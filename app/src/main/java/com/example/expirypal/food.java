@@ -1,48 +1,140 @@
 package com.example.expirypal;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
-
+import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 public class food extends AppCompatActivity {
+    private ListView foodListView;
+    private DatabaseHelper dbHelper;
+    private ArrayAdapter<String> adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.food_item_page);
 
+        // Initialize the database helper
+        dbHelper = new DatabaseHelper(this);
+
+        // Set up the back and add buttons
         ImageButton fooditemsback = findViewById(R.id.fiback);
-        ImageButton food1 = findViewById(R.id.imgFood1);
         ImageButton foodadd = findViewById(R.id.fiadd);
 
         fooditemsback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent faqgointent = new Intent(food.this, home.class);
-                startActivity(faqgointent);
-
-            }
-        });
-
-        food1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent fooddetailintent = new Intent(food.this, fooddetails.class);
-                startActivity(fooddetailintent);
+                Intent homeIntent = new Intent(food.this, home.class);
+                startActivity(homeIntent);
             }
         });
 
         foodadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent addfoodintent = new Intent(food.this, addfood.class);
-                startActivity(addfoodintent);
+                // Start the "addfood" activity to add a new item
+                Intent addFoodIntent = new Intent(food.this, addfood.class);
+                startActivityForResult(addFoodIntent, ADD_FOOD_REQUEST);
             }
         });
 
+        // Initialize the ListView
+        foodListView = findViewById(R.id.foodListView);
+
+        // Set up the search EditText and add a TextWatcher
+        EditText searchEditText = findViewById(R.id.fisearch);
+
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                adapter.getFilter().filter(s);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        // Retrieve and display the initial food items
+        refreshFoodList();
+
+        // Set an item click listener to handle clicks on the food items
+        foodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Handle item click and pass all food details to the editfood activity
+                String selectedFoodDetails = adapter.getItem(position);
+
+                Intent editFoodIntent = new Intent(food.this, editfood.class);
+                editFoodIntent.putExtra("selectedFoodDetails", selectedFoodDetails);
+                startActivity(editFoodIntent);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ADD_FOOD_REQUEST && resultCode == RESULT_OK) {
+            // If a new item was added successfully, refresh the list
+            refreshFoodList();
+        }
+    }
+
+    private static final int ADD_FOOD_REQUEST = 1;
+
+    private void refreshFoodList() {
+        ArrayList<String> foodItemsWithDetails = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.query(DatabaseHelper.TABLE_NAME_FOODS,
+                new String[]{DatabaseHelper.COLUMN_FOODNAME, DatabaseHelper.COLUMN_EDATE, DatabaseHelper.COLUMN_RDATE, DatabaseHelper.COLUMN_QUANTITY, DatabaseHelper.COLUMN_CATEGORY, DatabaseHelper.COLUMN_NOTE},
+                null, null, null, null, null);
+
+        while (cursor.moveToNext()) {
+            String foodName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_FOODNAME));
+            String expiryDate = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_EDATE));
+            String reminderDate = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_RDATE));
+            String quantity = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_QUANTITY));
+            String category = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_CATEGORY));
+            String note = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NOTE));
+
+            String details = "Food Name: " + foodName +
+                    "\nExpiry Date: " + expiryDate +
+                    "\nReminder Date: " + reminderDate +
+                    "\nQuantity: " + quantity +
+                    "\nCategory: " + category +
+                    "\nNote: " + note;
+
+            foodItemsWithDetails.add(details);
+        }
+
+        cursor.close();
+        db.close();
+
+        if (adapter == null) {
+            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, foodItemsWithDetails);
+            foodListView.setAdapter(adapter);
+        } else {
+            adapter.clear();
+            adapter.addAll(foodItemsWithDetails);
+            adapter.notifyDataSetChanged();
+        }
     }
 }

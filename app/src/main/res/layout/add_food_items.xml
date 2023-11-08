@@ -84,14 +84,15 @@
         app:layout_constraintVertical_bias="0.803" />
 
     <EditText
-        android:id="@+id/editTextDate"
+        android:id="@+id/etexpidate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="expiry date"
+        android:hint="Expiry Date"
         android:importantForAutofill="no"
-        android:inputType="date"
+        android:inputType="none"
         android:minHeight="48dp"
+        android:focusable="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.82"
@@ -101,7 +102,7 @@
         tools:ignore="LabelFor" />
 
     <EditText
-        android:id="@+id/editTextText3"
+        android:id="@+id/etNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:autofillHints=""
@@ -145,7 +146,7 @@
         app:layout_constraintVertical_bias="0.435" />
 
     <EditText
-        android:id="@+id/editTextNumber"
+        android:id="@+id/etqty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:autofillHints=""
@@ -177,14 +178,14 @@
         app:layout_constraintVertical_bias="0.525" />
 
     <EditText
-        android:id="@+id/editTextDate2"
+        android:id="@+id/etremindt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:autofillHints=""
         android:ems="10"
-        android:hint="reminder date"
-        android:inputType="date"
+        android:hint="Reminder Date"
+        android:inputType="none"
         android:minHeight="48dp"
+        android:focusable="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.82"
@@ -225,7 +226,7 @@
         app:layout_constraintVertical_bias="0.71" />
 
     <Spinner
-        android:id="@+id/spinnerFoodCategory"
+        android:id="@+id/sfcategory"
         android:layout_width="210dp"
         android:layout_height="40dp"
         app:layout_constraintBottom_toBottomOf="parent"

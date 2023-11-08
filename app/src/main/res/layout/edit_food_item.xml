@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     android:background="@drawable/image">
 
+    <Spinner
+        android:id="@+id/sfcategory2"
+        android:layout_width="210dp"
+        android:layout_height="40dp"
+        android:enabled="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.452"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.726" />
+
     <ImageButton
         android:id="@+id/efiback"
         android:layout_width="52dp"
@@ -19,14 +31,15 @@
         app:layout_constraintHorizontal_bias="0.011"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.037"
+        app:layout_constraintVertical_bias="0.023"
         app:srcCompat="@drawable/back_btn" />
 
     <EditText
-        android:id="@+id/editTextText10"
+        android:id="@+id/etfnedit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:enabled="false"
         android:hint="Food Name"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -37,10 +50,11 @@
         app:layout_constraintVertical_bias="0.402" />
 
     <EditText
-        android:id="@+id/editTextText11"
+        android:id="@+id/eteditexp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:enabled="false"
         android:hint="Expiry Date"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -51,7 +65,7 @@
         app:layout_constraintVertical_bias="0.485" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/btnsvefi"
         android:layout_width="122dp"
         android:layout_height="41dp"
 
@@ -70,10 +84,11 @@
         app:strokeWidth="2dp" />
 
     <EditText
-        android:id="@+id/editTextText14"
+        android:id="@+id/eteditnote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:enabled="false"
         android:hint="Notes"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -84,10 +99,11 @@
         app:layout_constraintVertical_bias="0.81" />
 
     <EditText
-        android:id="@+id/editTextNumber3"
+        android:id="@+id/eteditrem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:enabled="false"
         android:hint="Reminder Date"
         android:inputType="date"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -98,24 +114,11 @@
         app:layout_constraintVertical_bias="0.567" />
 
     <EditText
-        android:id="@+id/editTextText13"
+        android:id="@+id/eteditqty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Category"
-        android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.728" />
-
-    <EditText
-        android:id="@+id/editTextText12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
+        android:enabled="false"
         android:hint="Quantity"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -134,10 +137,10 @@
         android:textSize="35sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.649"
+        app:layout_constraintHorizontal_bias="0.938"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0.01" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -145,10 +148,10 @@
         android:layout_height="111dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.344"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.201"
+        app:layout_constraintVertical_bias="0.166"
         app:srcCompat="@android:drawable/ic_menu_report_image" />
 
     <ImageView
@@ -157,9 +160,21 @@
         android:layout_height="35dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.862"
+        app:layout_constraintHorizontal_bias="0.635"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.274"
+        app:layout_constraintVertical_bias="0.247"
         app:srcCompat="@android:drawable/ic_menu_camera" />
+
+    <ImageButton
+        android:id="@+id/efienedit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.314"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
 </androidx.constraintlayout.widget.ConstraintLayout>

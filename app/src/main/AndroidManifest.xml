@@ -20,6 +20,7 @@
         <!-- Specify the main activity with the LAUNCHER intent filter -->
         <activity
             android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,7 +35,10 @@
         <activity android:name=".signup" />
         <activity android:name=".feedbackp" />
         <activity android:name=".supportp" />
-        <activity android:name=".food" />
+        <activity
+            android:name=".food"
+            android:windowSoftInputMode="adjustPan"
+            />
         <activity android:name=".fooddetails" />
         <activity android:name=".addfood" />
         <activity android:name=".editfood" />
