@@ -16,25 +16,26 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class signup extends AppCompatActivity {
-    private EditText usernameEditText;
-    private EditText passwordEditText,cpassword;
-    private EditText emailEditText;
-    private CheckBox termsCheckBox, showp, showcp;
+    private EditText usernameEditText; // Declare EditText for the username
+    private EditText passwordEditText, cpassword; // Declare EditTexts for password and confirm password
+    private EditText emailEditText; // Declare EditText for email
+    private CheckBox termsCheckBox, showp, showcp; // Declare checkboxes for terms, show password, and show confirm password
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.signup);
+        setContentView(R.layout.signup); // Set the content view to the signup layout
 
         // Initialize views
-        usernameEditText = findViewById(R.id.etUsername);
-        passwordEditText = findViewById(R.id.etPass);
-        cpassword = findViewById(R.id.etConfirmP);
-        emailEditText = findViewById(R.id.etEmel);
-        termsCheckBox = findViewById(R.id.cbTerms);
-        showp = findViewById(R.id.shp);
-        showcp = findViewById(R.id.shcp);
+        usernameEditText = findViewById(R.id.etUsername); // Find the username EditText by its ID
+        passwordEditText = findViewById(R.id.etPass); // Find the password EditText by its ID
+        cpassword = findViewById(R.id.etConfirmP); // Find the confirm password EditText by its ID
+        emailEditText = findViewById(R.id.etEmel); // Find the email EditText by its ID
+        termsCheckBox = findViewById(R.id.cbTerms); // Find the terms checkbox by its ID
+        showp = findViewById(R.id.shp); // Find the show password checkbox by its ID
+        showcp = findViewById(R.id.shcp); // Find the show confirm password checkbox by its ID
 
+        // Set a click listener for the back button
         ImageButton back = findViewById(R.id.bbtn);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +46,7 @@ public class signup extends AppCompatActivity {
             }
         });
 
+        // Set a click listener for the sign-up button
         Button signUpButton = findViewById(R.id.btnSgp);
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +97,7 @@ public class signup extends AppCompatActivity {
             }
         });
 
-
+        // Set an OnCheckedChangeListener for the show password checkbox
         showp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // Toggle password visibility
@@ -107,9 +109,10 @@ public class signup extends AppCompatActivity {
             }
         });
 
+        // Set an OnCheckedChangeListener for the show confirm password checkbox
         showcp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // Toggle password visibility
+                // Toggle confirm password visibility
                 if (!isChecked) {
                     cpassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 } else {

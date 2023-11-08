@@ -19,44 +19,47 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 public class food extends AppCompatActivity {
-    private ListView foodListView;
-    private DatabaseHelper dbHelper;
-    private ArrayAdapter<String> adapter;
+    private ListView foodListView; // Declare a ListView for displaying food items
+    private DatabaseHelper dbHelper; // Database helper for database operations
+    private ArrayAdapter<String> adapter; // Adapter for the ListView
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.food_item_page);
+        setContentView(R.layout.food_item_page); // Set the content view to the food_item_page layout
 
         // Initialize the database helper
         dbHelper = new DatabaseHelper(this);
 
         // Set up the back and add buttons
-        ImageButton fooditemsback = findViewById(R.id.fiback);
-        ImageButton foodadd = findViewById(R.id.fiadd);
+        ImageButton fooditemsback = findViewById(R.id.fiback); // Find the back button by its ID
+        ImageButton foodadd = findViewById(R.id.fiadd); // Find the add button by its ID
 
+        // Set a click listener for the "Back" button
         fooditemsback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Navigate back to the home activity
                 Intent homeIntent = new Intent(food.this, home.class);
                 startActivity(homeIntent);
             }
         });
 
+        // Set a click listener for the "Add" button
         foodadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Start the "addfood" activity to add a new item
+                // Start the "addfood" activity to add a new food item
                 Intent addFoodIntent = new Intent(food.this, addfood.class);
                 startActivityForResult(addFoodIntent, ADD_FOOD_REQUEST);
             }
         });
 
         // Initialize the ListView
-        foodListView = findViewById(R.id.foodListView);
+        foodListView = findViewById(R.id.foodListView); // Find the ListView by its ID
 
         // Set up the search EditText and add a TextWatcher
-        EditText searchEditText = findViewById(R.id.fisearch);
+        EditText searchEditText = findViewById(R.id.fisearch); // Find the search EditText by its ID
 
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -109,7 +112,7 @@ public class food extends AppCompatActivity {
         }
     }
 
-    private static final int ADD_FOOD_REQUEST = 1;
+    private static final int ADD_FOOD_REQUEST = 1; // Request code for adding food items
 
     private void refreshFoodList() {
         ArrayList<String> foodItemsWithDetails = new ArrayList<>();

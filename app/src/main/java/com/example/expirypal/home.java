@@ -11,24 +11,24 @@ public class home extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home_page);
+        setContentView(R.layout.home_page); // Set the content view to the home_page layout
 
-
-        ImageButton logoutButton = findViewById(R.id.logoutbtn);
-        ImageButton faqButton = findViewById(R.id.faqbtn);
-        ImageButton fooditembtn = findViewById(R.id.imgFood);
-        ImageButton paymentbtn = findViewById(R.id.imgPayment);
-        ImageButton docbtn = findViewById(R.id.imgDoc);
+        ImageButton logoutButton = findViewById(R.id.logoutbtn); // Find the logout button by its ID
+        ImageButton faqButton = findViewById(R.id.faqbtn); // Find the FAQ button by its ID
+        ImageButton fooditembtn = findViewById(R.id.imgFood); // Find the food item button by its ID
+        ImageButton paymentbtn = findViewById(R.id.imgPayment); // Find the payment button by its ID
+        ImageButton docbtn = findViewById(R.id.imgDoc); // Find the document button by its ID
 
         // Set click listener for the "Logout" button
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Perform logout action
 
                 // Then, navigate back to the login page
                 Intent logoutintent = new Intent(home.this, MainActivity.class);
                 startActivity(logoutintent);
-                finish();
+                finish(); // Finish the current activity to prevent going back to it
             }
         });
 
@@ -36,37 +36,42 @@ public class home extends AppCompatActivity {
         faqButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Navigate to the FAQ page
 
                 // Here, you can navigate to the FAQ page
                 Intent faqgointent = new Intent(home.this, faq.class);
                 startActivity(faqgointent);
-
             }
         });
 
+        // Set click listener for the "Food Item" button
         fooditembtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Navigate to the food item page
                 Intent fooditemintent = new Intent(home.this, food.class);
                 startActivity(fooditemintent);
             }
         });
 
+        // Set click listener for the "Payment" button
         paymentbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Navigate to the payment page
                 Intent paymentitemintent = new Intent(home.this, payment.class);
                 startActivity(paymentitemintent);
             }
         });
 
+        // Set click listener for the "Document" button
         docbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Navigate to the document page
                 Intent documentinten = new Intent(home.this, document.class);
                 startActivity(documentinten);
             }
         });
-
     }
 }

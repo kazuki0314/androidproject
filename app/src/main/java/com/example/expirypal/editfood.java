@@ -17,14 +17,14 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class editfood extends AppCompatActivity {
-    private DatabaseHelper dbHelper;
-    private boolean isEditModeEnabled = false;
+    private DatabaseHelper dbHelper; // Database helper for database operations
+    private boolean isEditModeEnabled = false; // Flag to track if edit mode is enabled
     private String originalFoodName; // Store the original food name
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_food_item);
+        setContentView(R.layout.edit_food_item); // Set the content view to the edit_food_item layout
 
         dbHelper = new DatabaseHelper(this);
 
