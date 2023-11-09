@@ -69,6 +69,7 @@
         android:layout_width="122dp"
         android:layout_height="41dp"
 
+        android:enabled="false"
         android:text="Save"
         android:textColor="#090909"
         app:backgroundTint="@android:color/transparent"

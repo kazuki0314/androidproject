@@ -1,5 +1,6 @@
 package com.example.expirypal;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.SimpleDateFormat;
@@ -35,8 +38,8 @@ public class editfood extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Return to the "food" activity
-                Intent foodIntent = new Intent(editfood.this, food.class);
-                startActivity(foodIntent);
+                Intent foodgobackeditprevIntent = new Intent(editfood.this, food.class);
+                startActivity(foodgobackeditprevIntent);
             }
         });
 
@@ -55,6 +58,8 @@ public class editfood extends AppCompatActivity {
         EditText eteditqty = findViewById(R.id.eteditqty);
         Spinner sfoodcty = findViewById(R.id.sfcategory2);
         EditText eteditnote = findViewById(R.id.eteditnote);
+        // Find the "Save" button
+        Button efisave = findViewById(R.id.btnsvefi);
 
         // Get the array of food categories from the resources
         String[] foodCategories = getResources().getStringArray(R.array.food_categories);
@@ -64,6 +69,7 @@ public class editfood extends AppCompatActivity {
 
         // Set the adapter for the Spinner
         sfoodcty.setAdapter(adapter);
+        sfoodcty.setEnabled(false);
 
         // Populate the EditText fields with the retrieved data
         etfnedit.setText(originalFoodName);
@@ -89,6 +95,7 @@ public class editfood extends AppCompatActivity {
                     disableEditMode(eteditqty);
                     disableEditMode(eteditnote);
                     sfoodcty.setEnabled(false); // Disable the Spinner
+                    efisave.setEnabled(false);
                 } else {
                     // Enable edit mode
                     enableEditMode(etfnedit);
@@ -97,6 +104,7 @@ public class editfood extends AppCompatActivity {
                     enableEditMode(eteditqty);
                     enableEditMode(eteditnote);
                     sfoodcty.setEnabled(true); // Enable the Spinner
+                    efisave.setEnabled(true);
                 }
                 isEditModeEnabled = !isEditModeEnabled; // Toggle edit mode flag
             }
@@ -117,9 +125,6 @@ public class editfood extends AppCompatActivity {
             }
         });
 
-        // Find the "Save" button
-        Button efisave = findViewById(R.id.btnsvefi);
-
         // Add a click listener to save the edited food details
         efisave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,22 +137,49 @@ public class editfood extends AppCompatActivity {
                 String category = sfoodcty.getSelectedItem().toString();
                 String note = eteditnote.getText().toString();
 
-                // Update the food details in the database
-                boolean isUpdateSuccessful = dbHelper.updateFoodDetails(originalFoodName, foodName, expiryDate, reminderDate, quantity, category, note);
-
-                if (isUpdateSuccessful) {
-                    // Show a success message
-                    Toast.makeText(editfood.this, "Food details updated successfully", Toast.LENGTH_SHORT).show();
-
-                    // Return to the previous page
-                    Intent foodIntent = new Intent(editfood.this, food.class);
-                    startActivity(foodIntent);
+                // Check for empty fields (except "Note")
+                if (foodName.isEmpty() || expiryDate.isEmpty() || reminderDate.isEmpty() || quantity.isEmpty() || category.equals("Select Category")) {
+                    // Show an error message if any of the required fields are empty
+                    Toast.makeText(editfood.this, "Please fill in all required fields.", Toast.LENGTH_SHORT).show();
                 } else {
-                    // Show an error message
-                    Toast.makeText(editfood.this, "Failed to update food details", Toast.LENGTH_SHORT).show();
+                    // Create a confirmation dialog
+                    AlertDialog.Builder buildereditfood = new AlertDialog.Builder(editfood.this);
+                    buildereditfood.setMessage("Do you want to save the changes?");
+                    buildereditfood.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Update the food details in the database
+                            boolean isUpdateSuccessful = dbHelper.updateFoodDetails(originalFoodName, foodName, expiryDate, reminderDate, quantity, category, note);
+
+                            if (isUpdateSuccessful) {
+                                // Show a success message
+                                Toast.makeText(editfood.this, "Food details updated successfully", Toast.LENGTH_SHORT).show();
+
+                                // Return to the previous page
+                                Intent foodbackeditIntent = new Intent(editfood.this, food.class);
+                                startActivity(foodbackeditIntent);
+                            } else {
+                                // Show an error message
+                                Toast.makeText(editfood.this, "Failed to update food details", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                    buildereditfood.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // User canceled the operation
+                            dialog.dismiss(); // Close the dialog
+                        }
+                    });
+
+                    // Show the confirmation dialog
+                    AlertDialog dialogeditfood = buildereditfood.create();
+                    dialogeditfood.show();
                 }
             }
         });
+
+
     }
 
     // Display the date picker dialog
