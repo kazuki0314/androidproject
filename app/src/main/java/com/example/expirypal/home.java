@@ -1,9 +1,12 @@
 package com.example.expirypal;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class home extends AppCompatActivity {
@@ -23,14 +26,32 @@ public class home extends AppCompatActivity {
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Perform logout action
+                // Show a confirmation dialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(home.this);
+                builder.setMessage("Are you sure you want to log out?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // User clicked Yes button
+                                // Perform logout action
 
-                // Then, navigate back to the login page
-                Intent logoutintent = new Intent(home.this, MainActivity.class);
-                startActivity(logoutintent);
-                finish(); // Finish the current activity to prevent going back to it
+                                // Then, navigate back to the login page
+                                Intent logoutintent = new Intent(home.this, MainActivity.class);
+                                startActivity(logoutintent);
+                                finish(); // Finish the current activity to prevent going back to it
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // User clicked No button
+                                // Dismiss the dialog, no action needed
+                                dialog.dismiss();
+                            }
+                        });
+                // Create and show the AlertDialog
+                builder.create().show();
             }
         });
+
 
         // Set click listener for the "FAQ" button
         faqButton.setOnClickListener(new View.OnClickListener() {

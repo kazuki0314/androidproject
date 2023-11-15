@@ -50,6 +50,7 @@
         <activity android:name=".documentdetails" />
         <activity android:name=".adddocument" />
         <activity android:name=".editdocument" />
+        <activity android:name=".DetailActivity" />
 
         <!-- ... Other components and meta-data ... -->
 

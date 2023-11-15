@@ -17,4 +17,22 @@
         <item>Snacks</item>
         <item>Others</item>
     </string-array>
+
+    <string-array name="feedback_categories">
+        <item>Select Categories</item>
+        <item>Usability</item>
+        <item>Functionality</item>
+        <item>Security and Privacy</item>
+        <item>Performance</item>
+        <item>General</item>
+    </string-array>
+
+    <string-array name="problem_categories">
+        <item>Select Categories</item>
+        <item>Usability</item>
+        <item>Functionality</item>
+        <item>Security and Privacy</item>
+        <item>Performance</item>
+        <item>General</item>
+    </string-array>
 </resources>
