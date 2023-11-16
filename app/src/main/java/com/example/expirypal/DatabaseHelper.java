@@ -26,7 +26,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_QUANTITY = "quantity";
     public static final String COLUMN_CATEGORY = "category";
     public static final String COLUMN_NOTE = "note";
-    public static final String COLUMN_USER_ID = "user_id";
 
     // Define table and column names for the "documents" table
     public static final String TABLE_NAME_DOCUMENTS = "documents"; // Name of the documents table
@@ -51,8 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             COLUMN_RDATE + " text not null, " +
             COLUMN_QUANTITY + " text not null, " +
             COLUMN_CATEGORY + " text not null, " +
-            COLUMN_NOTE + " text not null, " +
-            COLUMN_USER_ID + " integer not null);";
+            COLUMN_NOTE + " text not null);";
 
     private static final String DATABASE_CREATE_DOCUMENTS = "create table " + TABLE_NAME_DOCUMENTS +
             " (" + COLUMN_DOCNAME + " text not null, " +

@@ -20,7 +20,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class editfood extends AppCompatActivity {
-    private DatabaseHelper dbHelper; // Database helper for database operations
+    private DatabaseHelper dbHelperfood; // Database helper for database operations
     private boolean isEditModeEnabled = false; // Flag to track if edit mode is enabled
     private String originalFoodName; // Store the original food name
 
@@ -29,7 +29,7 @@ public class editfood extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_food_item); // Set the content view to the edit_food_item layout
 
-        dbHelper = new DatabaseHelper(this);
+        dbHelperfood = new DatabaseHelper(this);
 
         // Find the back button
         ImageButton efibk = findViewById(R.id.efiback);
@@ -149,7 +149,7 @@ public class editfood extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             // Update the food details in the database
-                            boolean isUpdateSuccessful = dbHelper.updateFoodDetails(originalFoodName, foodName, expiryDate, reminderDate, quantity, category, note);
+                            boolean isUpdateSuccessful = dbHelperfood.updateFoodDetails(originalFoodName, foodName, expiryDate, reminderDate, quantity, category, note);
 
                             if (isUpdateSuccessful) {
                                 // Show a success message

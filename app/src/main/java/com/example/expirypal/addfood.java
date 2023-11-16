@@ -75,8 +75,8 @@ public class addfood extends AppCompatActivity {
                     return;
                 }
 
-                DatabaseHelper dbHelper = new DatabaseHelper(addfood.this);
-                SQLiteDatabase db = dbHelper.getWritableDatabase();
+                DatabaseHelper dbHelperfood = new DatabaseHelper(addfood.this);
+                SQLiteDatabase dbfood = dbHelperfood.getWritableDatabase();
 
                 ContentValues foodinfo = new ContentValues();
                 foodinfo.put(DatabaseHelper.COLUMN_FOODNAME, foodname);
@@ -86,7 +86,7 @@ public class addfood extends AppCompatActivity {
                 foodinfo.put(DatabaseHelper.COLUMN_CATEGORY, category);
                 foodinfo.put(DatabaseHelper.COLUMN_NOTE, note);
 
-                long newRowId = db.insert(DatabaseHelper.TABLE_NAME_FOODS, null, foodinfo);
+                long newRowId = dbfood.insert(DatabaseHelper.TABLE_NAME_FOODS, null, foodinfo);
 
                 if (newRowId != -1) {
                     // Schedule the reminder if the food item is added successfully
@@ -98,7 +98,7 @@ public class addfood extends AppCompatActivity {
                     showToast("Failed to add food item.");
                 }
 
-                db.close();
+                dbfood.close();
             }
         });
 
