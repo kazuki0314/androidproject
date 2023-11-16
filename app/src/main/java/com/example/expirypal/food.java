@@ -19,47 +19,39 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 public class food extends AppCompatActivity {
-    private ListView foodListView; // Declare a ListView for displaying food items
-    private DatabaseHelper dbHelper; // Database helper for database operations
-    private ArrayAdapter<String> adapter; // Adapter for the ListView
+    private ListView foodListView;
+    private DatabaseHelper dbHelper;
+    private ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.food_item_page); // Set the content view to the food_item_page layout
+        setContentView(R.layout.food_item_page);
 
-        // Initialize the database helper
         dbHelper = new DatabaseHelper(this);
 
-        // Set up the back and add buttons
-        ImageButton fooditemsback = findViewById(R.id.fiback); // Find the back button by its ID
-        ImageButton foodadd = findViewById(R.id.fiadd); // Find the add button by its ID
+        ImageButton fooditemsback = findViewById(R.id.fiback);
+        ImageButton foodadd = findViewById(R.id.fiadd);
 
-        // Set a click listener for the "Back" button
         fooditemsback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Navigate back to the home activity
                 Intent homeIntent = new Intent(food.this, home.class);
                 startActivity(homeIntent);
             }
         });
 
-        // Set a click listener for the "Add" button
         foodadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Start the "addfood" activity to add a new food item
                 Intent addFoodIntent = new Intent(food.this, addfood.class);
                 startActivityForResult(addFoodIntent, ADD_FOOD_REQUEST);
             }
         });
 
-        // Initialize the ListView
-        foodListView = findViewById(R.id.foodListView); // Find the ListView by its ID
+        foodListView = findViewById(R.id.foodListView);
 
-        // Set up the search EditText and add a TextWatcher
-        EditText searchEditText = findViewById(R.id.fisearch); // Find the search EditText by its ID
+        EditText searchEditText = findViewById(R.id.fisearch);
 
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -76,14 +68,11 @@ public class food extends AppCompatActivity {
             }
         });
 
-        // Retrieve and display the initial food items
         refreshFoodList();
 
-        // Set an item click listener to handle clicks on the food items
         foodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Handle item click and pass all food details to the editfood activity
                 String selectedFoodDetails = adapter.getItem(position);
 
                 Intent editFoodIntent = new Intent(food.this, editfood.class);
@@ -92,12 +81,11 @@ public class food extends AppCompatActivity {
             }
         });
 
-        // Set a long-press listener to delete food items
         foodListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 showDeleteConfirmationDialog(position);
-                return true; // Consume the long-press event
+                return true;
             }
         });
     }
@@ -112,14 +100,17 @@ public class food extends AppCompatActivity {
         }
     }
 
-    private static final int ADD_FOOD_REQUEST = 1; // Request code for adding food items
+    private static final int ADD_FOOD_REQUEST = 1;
 
     private void refreshFoodList() {
         ArrayList<String> foodItemsWithDetails = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String currentDate = DatabaseHelper.getCurrentDate();
+
         Cursor cursor = db.query(DatabaseHelper.TABLE_NAME_FOODS,
                 new String[]{DatabaseHelper.COLUMN_FOODNAME, DatabaseHelper.COLUMN_EDATE, DatabaseHelper.COLUMN_RDATE, DatabaseHelper.COLUMN_QUANTITY, DatabaseHelper.COLUMN_CATEGORY, DatabaseHelper.COLUMN_NOTE},
-                null, null, null, null, null);
+                null, null, null, null, DatabaseHelper.COLUMN_EDATE);
 
         while (cursor.moveToNext()) {
             String foodName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_FOODNAME));
@@ -129,28 +120,32 @@ public class food extends AppCompatActivity {
             String category = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_CATEGORY));
             String note = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NOTE));
 
-            String details = "Food Name: " + foodName +
-                    "\nExpiry Date: " + expiryDate +
-                    "\nReminder Date: " + reminderDate +
-                    "\nQuantity: " + quantity +
-                    "\nCategory: " + category +
-                    "\nNote: " + note;
+            if (DatabaseHelper.isDateNearExpiry(currentDate, expiryDate)) {
+                String details = "Food Name: " + foodName +
+                        "\nExpiry Date: " + expiryDate +
+                        "\nReminder Date: " + reminderDate +
+                        "\nQuantity: " + quantity +
+                        "\nCategory: " + category +
+                        "\nNote: " + note;
 
-            foodItemsWithDetails.add(details);
+                foodItemsWithDetails.add(details);
+            }
         }
 
         cursor.close();
         db.close();
 
-        if (adapter == null) {
-            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, foodItemsWithDetails);
-            foodListView.setAdapter(adapter);
-        } else {
+        // Clear the adapter before updating it
+        if (adapter != null) {
             adapter.clear();
-            adapter.addAll(foodItemsWithDetails);
-            adapter.notifyDataSetChanged();
         }
+
+        // Update the adapter with the new data
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, foodItemsWithDetails);
+        foodListView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
+
 
     private void showDeleteConfirmationDialog(final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -162,7 +157,6 @@ public class food extends AppCompatActivity {
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // User canceled the deletion, so do nothing
                     }
                 });
         AlertDialog dialog = builder.create();
@@ -170,23 +164,19 @@ public class food extends AppCompatActivity {
     }
 
     private void deleteFoodItem(int position) {
-        // Get the selected food name from the adapter
         String selectedFoodDetails = adapter.getItem(position);
         String foodName = getFoodNameFromDetails(selectedFoodDetails);
 
-        // Delete the item from the database based on the food name
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         int rowsDeleted = db.delete(DatabaseHelper.TABLE_NAME_FOODS, DatabaseHelper.COLUMN_FOODNAME + "=?", new String[]{foodName});
         db.close();
 
         if (rowsDeleted > 0) {
-            // Deletion was successful, refresh the food list
             refreshFoodList();
         }
     }
 
     private String getFoodNameFromDetails(String details) {
-        // Parse the food name from the food details string
         String[] lines = details.split("\n");
         if (lines.length > 0) {
             String line = lines[0];

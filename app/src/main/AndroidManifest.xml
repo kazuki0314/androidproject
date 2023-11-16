@@ -3,6 +3,7 @@
     package="com.example.expirypal">
 
     <!-- Add the necessary permissions for SQLite database access -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -51,6 +52,8 @@
         <activity android:name=".adddocument" />
         <activity android:name=".editdocument" />
         <activity android:name=".DetailActivity" />
+        <receiver android:name=".ReminderReceiver" />
+
 
         <!-- ... Other components and meta-data ... -->
 

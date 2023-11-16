@@ -1,8 +1,11 @@
 package com.example.expirypal;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -18,7 +21,6 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class addfood extends AppCompatActivity {
-    // Declare the UI elements
     private EditText foodn, expdate, remdate, quanty, notes;
     private Spinner spinnerFoodCategory;
     private Button addfoodit;
@@ -28,7 +30,6 @@ public class addfood extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_food_items);
 
-        // Initialize UI elements by finding their respective views
         foodn = findViewById(R.id.etfoodn);
         expdate = findViewById(R.id.etexpidate);
         remdate = findViewById(R.id.etremindt);
@@ -37,7 +38,6 @@ public class addfood extends AppCompatActivity {
         notes = findViewById(R.id.etNote);
         addfoodit = findViewById(R.id.addfibtn);
 
-        // Create an ArrayAdapter for the food categories spinner
         ArrayAdapter<CharSequence> foodCategoryAdapter = ArrayAdapter.createFromResource(
                 this,
                 R.array.food_categories,
@@ -46,7 +46,6 @@ public class addfood extends AppCompatActivity {
         foodCategoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerFoodCategory.setAdapter(foodCategoryAdapter);
 
-        // Set click listeners for the date input fields
         expdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,11 +60,9 @@ public class addfood extends AppCompatActivity {
             }
         });
 
-        // Set a click listener for the "Add" button
         addfoodit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Retrieve user input from the UI elements
                 String foodname = foodn.getText().toString();
                 String expDateStr = expdate.getText().toString();
                 String remDateStr = remdate.getText().toString();
@@ -73,13 +70,11 @@ public class addfood extends AppCompatActivity {
                 String category = spinnerFoodCategory.getSelectedItem().toString();
                 String note = notes.getText().toString();
 
-                // Check if the required fields are filled
                 if (foodname.isEmpty() || expDateStr.isEmpty() || remDateStr.isEmpty() || quantity.isEmpty() || category.equals("Select Category")) {
                     showToast("Please fill in all required fields.");
                     return;
                 }
 
-                // Open the database and insert food information
                 DatabaseHelper dbHelper = new DatabaseHelper(addfood.this);
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -93,35 +88,33 @@ public class addfood extends AppCompatActivity {
 
                 long newRowId = db.insert(DatabaseHelper.TABLE_NAME_FOODS, null, foodinfo);
 
-                // Show a toast message based on the insert result
                 if (newRowId != -1) {
+                    // Schedule the reminder if the food item is added successfully
+                    setReminder(remDateStr, foodname);
+
                     showToast("Food item added successfully!");
                     finish();
                 } else {
                     showToast("Failed to add food item.");
                 }
 
-                // Close the database connection
                 db.close();
             }
         });
 
-        // Set a click listener for the back button
         ImageButton addfoodback = findViewById(R.id.afiback);
         addfoodback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // Close this activity and return to the previous one.
+                finish();
             }
         });
     }
 
-    // Show a toast message
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    // Display the date picker dialog
     private void showDatePickerDialog(final EditText editText) {
         Calendar currentDate = Calendar.getInstance();
         int year = currentDate.get(Calendar.YEAR);
@@ -139,5 +132,31 @@ public class addfood extends AppCompatActivity {
         }, year, month, day);
 
         datePickerDialog.show();
+    }
+
+    private void setReminder(String reminderDate, String foodName) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, ReminderReceiver.class);
+        intent.putExtra("food_name", foodName);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+
+        long reminderMillis = parseDateToMillis(reminderDate);
+
+        if (alarmManager != null) {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, reminderMillis, pendingIntent);
+        }
+    }
+
+    private long parseDateToMillis(String dateStr) {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(dateFormat.parse(dateStr));
+            return calendar.getTimeInMillis();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }
