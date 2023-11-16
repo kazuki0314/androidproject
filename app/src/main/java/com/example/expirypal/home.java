@@ -90,8 +90,8 @@ public class home extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Navigate to the document page
-                Intent documentinten = new Intent(home.this, document.class);
-                startActivity(documentinten);
+                Intent documentitemintent = new Intent(home.this, document.class);
+                startActivity(documentitemintent);
             }
         });
     }

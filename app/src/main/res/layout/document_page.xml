@@ -6,51 +6,19 @@
     android:layout_height="match_parent"
     android:background="@drawable/bluebg">
 
-    <ImageButton
-        android:id="@+id/docadd"
-        android:layout_width="55dp"
-        android:layout_height="42dp"
-        android:adjustViewBounds="true"
-        android:background="@null"
-        android:contentDescription="NULL"
-        android:scaleType="centerInside"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.947"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976"
-        app:srcCompat="@drawable/add_btn" />
-
-    <ImageButton
-        android:id="@+id/docfilter"
-        android:layout_width="45dp"
-        android:layout_height="43dp"
-        android:adjustViewBounds="true"
-        android:background="@null"
-        android:contentDescription="NULL"
-        android:scaleType="centerInside"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.915"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.17"
-        app:srcCompat="@drawable/filter_btn" />
-
-    <EditText
-        android:id="@+id/docsearch"
+    <TextView
+        android:id="@+id/logintext2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Search"
-        android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:fontFamily="@font/changa_one"
+        android:text="Documents"
+        android:textColor="#2E2B2B"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toTopOf="@+id/docsearch"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.567"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.167" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/docbackbtn"
@@ -62,78 +30,46 @@
         android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintHorizontal_bias="0.011"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023"
+        app:layout_constraintVertical_bias="0.015"
         app:srcCompat="@drawable/back_btn" />
 
-    <TextView
-        android:id="@+id/logintext2"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/docsearch"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/changa_one"
-        android:text="Documents"
-        android:textColor="#2E2B2B"
-        android:textSize="50sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:hint="Search"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.565"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintTop_toBottomOf="@+id/logintext2" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="409dp"
+    <ListView
+        android:id="@+id/docListView"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="385dp"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/docsearch" />
 
     <ImageButton
-        android:id="@+id/imgDoc1"
-        android:layout_width="328dp"
-        android:layout_height="84dp"
+        android:id="@+id/docadd"
+        android:layout_width="55dp"
+        android:layout_height="42dp"
         android:adjustViewBounds="true"
         android:background="@null"
         android:contentDescription="NULL"
         android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintHorizontal_bias="0.955"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.324"
-        app:srcCompat="@drawable/document_item_btn" />
-
-    <ImageButton
-        android:id="@+id/imageButton14"
-        android:layout_width="328dp"
-        android:layout_height="84dp"
-        android:adjustViewBounds="true"
-        android:background="@null"
-        android:contentDescription="NULL"
-        android:scaleType="centerInside"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499"
-        app:srcCompat="@drawable/document_item_btn" />
-
-    <ImageButton
-        android:id="@+id/imageButton15"
-        android:layout_width="328dp"
-        android:layout_height="84dp"
-        android:adjustViewBounds="true"
-        android:background="@null"
-        android:contentDescription="NULL"
-        android:scaleType="centerInside"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.681"
-        app:srcCompat="@drawable/document_item_btn" />
-
+        app:layout_constraintVertical_bias="0.976"
+        app:srcCompat="@drawable/add_btn" />
 </androidx.constraintlayout.widget.ConstraintLayout>
