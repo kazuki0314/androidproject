@@ -41,7 +41,7 @@ public class signup extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Navigate back to the main activity
-                Intent mainIntent = new Intent(signup.this, MainActivity.class);
+                Intent mainIntent = new Intent(signup.this, loginapp.class);
                 startActivity(mainIntent);
             }
         });
@@ -83,7 +83,7 @@ public class signup extends AppCompatActivity {
                     if (newRowId != -1) {
                         // Registration successful
                         Toast.makeText(signup.this, "Registration successful.", Toast.LENGTH_SHORT).show();
-                        Intent registersuc = new Intent(signup.this, MainActivity.class);
+                        Intent registersuc = new Intent(signup.this, loginapp.class);
                         startActivity(registersuc);
                     } else {
                         // Registration failed

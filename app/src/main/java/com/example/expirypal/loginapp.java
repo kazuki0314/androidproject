@@ -12,15 +12,11 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class loginapp extends AppCompatActivity {
     private EditText username, password; // Declare EditText fields for username and password
     private Button login, signup; // Declare login and signup buttons
     private CheckBox showButton; // Declare a checkbox for showing/hiding the password
@@ -51,17 +47,17 @@ public class MainActivity extends AppCompatActivity {
 
                 if (isAuthenticated) {
                     // Show a success toast message
-                    Toast toast1 = Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT);
+                    Toast toast1 = Toast.makeText(loginapp.this, "Login Successful", Toast.LENGTH_SHORT);
                     toast1.setGravity(Gravity.LEFT, 0, 780);
                     toast1.show();
 
                     // Authentication successful, navigate to the next activity (home)
-                    Intent nextpageIntent = new Intent(MainActivity.this, home.class);
+                    Intent nextpageIntent = new Intent(loginapp.this, home.class);
                     nextpageIntent.putExtra("username", usern); // Pass the username as an extra to the next activity
                     startActivity(nextpageIntent);
                 } else {
                     // Show an error toast message for incorrect username/password
-                    Toast toast = Toast.makeText(MainActivity.this, "Incorrect Username/Password", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(loginapp.this, "Incorrect Username/Password", Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.LEFT, 0, 780);
                     toast.show();
                 }
@@ -73,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Navigate to the signup activity
-                Intent signupIntent = new Intent(MainActivity.this, signup.class);
+                Intent signupIntent = new Intent(loginapp.this, signup.class);
                 startActivity(signupIntent);
             }
         });

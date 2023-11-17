@@ -20,7 +20,7 @@
 
         <!-- Specify the main activity with the LAUNCHER intent filter -->
         <activity
-            android:name=".MainActivity"
+            android:name=".loginapp"
             android:windowSoftInputMode="adjustPan"
             android:exported="true">
             <intent-filter>

@@ -35,7 +35,7 @@ public class home extends AppCompatActivity {
                                 // Perform logout action
 
                                 // Then, navigate back to the login page
-                                Intent logoutintent = new Intent(home.this, MainActivity.class);
+                                Intent logoutintent = new Intent(home.this, loginapp.class);
                                 startActivity(logoutintent);
                                 finish(); // Finish the current activity to prevent going back to it
                             }
