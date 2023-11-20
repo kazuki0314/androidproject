@@ -35,8 +35,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_LOCATION = "location"; // Location column name
     public static final String COLUMN_DOCNUM = "docnum"; // Document number column name
     public static final String COLUMN_SENDTO = "sendto"; // Send to column name
-    public static final String COLUMN_ATTACHMENT = "attachment"; // Attachment column name
-    public static final String COLUMN_NOTES = "notes"; // Notes column name
+    //    public static final String COLUMN_ATTACHMENT = "attachment"; // Attachment column name
+    public static final String COLUMN_DOC_NOTES = "docnotes"; // Notes column name
+
+    // Define table and column names for the "payment" table
+    public static final String TABLE_NAME_PAYMENT = "payment"; // Name of the payment table
+    public static final String COLUMN_PAYMENTNAME = "paymentname"; // payment name for payment column name
+    public static final String COLUMN_PAYTO = "payto"; // pay to name column name
+    public static final String COLUMN_PAYFOR = "payfor"; // pay for column name
+    public static final String COLUMN_PAYDATE = "paydate"; // payment date column name
+    public static final String COLUMN_PAYRDATE = "payremdate"; // Reminder date column name
+    public static final String COLUMN_PAYACCNUM = "payaccnum"; // Payment amount column name
+    public static final String COLUMN_PAYAMOUNT = "payamount"; // Payment amount column name
+    public static final String COLUMN_PAYMETHOD = "paymethod"; // Payment method column name
+    public static final String COLUMN_PAYNOTE = "paynote"; // Notes column name
 
     private static final String DATABASE_CREATE_USERS = "create table " + TABLE_NAME_USERS +
             " (" + COLUMN_USERID + " integer primary key autoincrement, " +
@@ -59,8 +71,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             COLUMN_LOCATION + " text not null, " +
             COLUMN_DOCNUM + " text not null, " +
             COLUMN_SENDTO + " text not null, " +
-            COLUMN_ATTACHMENT + " text not null, " +
-            COLUMN_NOTES + " text not null);";
+             //  COLUMN_ATTACHMENT + " text not null, " +
+            COLUMN_DOC_NOTES + " text not null);";
+
+    private static final String DATABASE_CREATE_PAYMENT = "create table " + TABLE_NAME_PAYMENT +
+            " (" + COLUMN_PAYMENTNAME + " text not null, " +
+            COLUMN_PAYTO + " text not null, " +
+            COLUMN_PAYFOR + " text not null, " +
+            COLUMN_PAYDATE + " text not null, " +
+            COLUMN_PAYRDATE + " text not null, " +
+            COLUMN_PAYAMOUNT + " text not null," +
+            COLUMN_PAYACCNUM + " text not null," +
+            COLUMN_PAYMETHOD + " text not null," +
+            COLUMN_PAYNOTE + " text not null);";
 
 
 
@@ -84,7 +107,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return rowsUpdated > 0;
     }
 
-    public boolean updateDocumentDetails(String originalDocName, String newDocName, String renewalDate, String reminderDate, String location, String docNum, String sendTo, String notes) {
+    public boolean updateDocumentDetails(String originalDocName, String newDocName, String renewalDate, String reminderDate, String location, String docNum, String sendTo, String docnotes) {
         SQLiteDatabase db = this.getWritableDatabase(); // Get a writable database
         ContentValues values = new ContentValues();
         values.put(COLUMN_DOCNAME, newDocName);
@@ -94,12 +117,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_DOCNUM, docNum);
         values.put(COLUMN_SENDTO, sendTo);
         //values.put(COLUMN_ATTACHMENT, attachment);
-        values.put(COLUMN_NOTES, notes);
+        values.put(COLUMN_DOC_NOTES, docnotes);
 
         // Update the "documents" table with new values for a specific document
         int rowsUpdated = db.update(TABLE_NAME_DOCUMENTS, values, COLUMN_DOCNAME + " = ?", new String[]{originalDocName});
 
         return rowsUpdated > 0; // Return true if one or more rows were updated
+    }
+
+    public boolean updatePaymentDetails(String originalPaymentName, String newPaymentName, String payTo, String payFor, String payDate, String payRDate, String payAmount, String payAccNum, String payMethod, String payNote) {
+        SQLiteDatabase db = this.getWritableDatabase(); // Get a writable database
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PAYMENTNAME, newPaymentName);
+        values.put(COLUMN_PAYTO, payTo);
+        values.put(COLUMN_PAYFOR, payFor);
+        values.put(COLUMN_PAYDATE, payDate);
+        values.put(COLUMN_PAYRDATE, payRDate);
+        values.put(COLUMN_PAYAMOUNT, payAmount);
+        values.put(COLUMN_PAYACCNUM, payAccNum);
+        values.put(COLUMN_PAYMETHOD, payMethod);
+        values.put(COLUMN_PAYNOTE, payNote);
+
+
+        // Update the "foods" table with new values for a specific food
+        int paymentrowsUpdated = db.update(TABLE_NAME_PAYMENT, values, COLUMN_PAYMENTNAME + " = ?", new String[]{originalPaymentName});
+
+        return paymentrowsUpdated > 0; // Return true if one or more rows were updated
     }
 
 
@@ -108,6 +151,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         database.execSQL(DATABASE_CREATE_USERS);
         database.execSQL(DATABASE_CREATE_FOODS);
         database.execSQL(DATABASE_CREATE_DOCUMENTS);
+        database.execSQL(DATABASE_CREATE_PAYMENT);
     }
 
     @Override
@@ -115,6 +159,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_USERS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_FOODS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_DOCUMENTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_PAYMENT);
         onCreate(db);
     }
 

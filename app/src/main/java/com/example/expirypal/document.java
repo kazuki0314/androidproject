@@ -16,6 +16,12 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 
 public class document extends AppCompatActivity {
     private ListView docListView;
@@ -100,7 +106,7 @@ public class document extends AppCompatActivity {
     }
 
     private void refreshDocumentList() {
-        ArrayList<String> documentItemsWithDetails = new ArrayList<>();
+        ArrayList<DocumentDetails> documentItemsWithDetails = new ArrayList<>();
         SQLiteDatabase db = dbHelper2.getReadableDatabase();
         Cursor cursor2 = db.query(DatabaseHelper.TABLE_NAME_DOCUMENTS,
                 new String[]{
@@ -110,8 +116,8 @@ public class document extends AppCompatActivity {
                         DatabaseHelper.COLUMN_DOCNUM,
                         DatabaseHelper.COLUMN_SENDTO,
                         DatabaseHelper.COLUMN_LOCATION,
-                        DatabaseHelper.COLUMN_NOTES,
-                        DatabaseHelper.COLUMN_ATTACHMENT},
+                        DatabaseHelper.COLUMN_DOC_NOTES},
+//                        DatabaseHelper.COLUMN_ATTACHMENT},
                 null, null, null, null, null);
 
         while (cursor2.moveToNext()) {
@@ -121,8 +127,8 @@ public class document extends AppCompatActivity {
             String documentNumber = cursor2.getString(cursor2.getColumnIndex(DatabaseHelper.COLUMN_DOCNUM));
             String sendTo = cursor2.getString(cursor2.getColumnIndex(DatabaseHelper.COLUMN_SENDTO));
             String locationStored = cursor2.getString(cursor2.getColumnIndex(DatabaseHelper.COLUMN_LOCATION));
-            String notes = cursor2.getString(cursor2.getColumnIndex(DatabaseHelper.COLUMN_NOTES));
-            String attachment = cursor2.getString(cursor2.getColumnIndex(DatabaseHelper.COLUMN_ATTACHMENT));
+            String docnotes = cursor2.getString(cursor2.getColumnIndex(DatabaseHelper.COLUMN_DOC_NOTES));
+//            String attachment = cursor2.getString(cursor2.getColumnIndex(DatabaseHelper.COLUMN_ATTACHMENT));
 
             String details = "Document Name: " + docName +
                     "\nRenewal Date: " + renewalDate +
@@ -130,24 +136,65 @@ public class document extends AppCompatActivity {
                     "\nDocument Number: " + documentNumber +
                     "\nSend To: " + sendTo +
                     "\nLocation Stored: " + locationStored +
-                    "\nNotes: " + notes +
-                    "\nAttachment: " + attachment;
+                    "\nNotes: " + docnotes;
+//                    "\nAttachment: " + attachment;
 
-            documentItemsWithDetails.add(details);
+            // Convert renewalDate to Date for sorting
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Date renewalDateObj = dateFormat.parse(renewalDate);
+                documentItemsWithDetails.add(new DocumentDetails(renewalDateObj, details));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
         }
 
         cursor2.close();
         db.close();
 
+        // Sort documents by renewal date
+        Collections.sort(documentItemsWithDetails, new Comparator<DocumentDetails>() {
+            @Override
+            public int compare(DocumentDetails d1, DocumentDetails d2) {
+                return d1.getRenewalDate().compareTo(d2.getRenewalDate());
+            }
+        });
+
+        // Convert back to String for display
+        ArrayList<String> sortedDocumentItemsWithDetails = new ArrayList<>();
+        for (DocumentDetails documentDetails : documentItemsWithDetails) {
+            sortedDocumentItemsWithDetails.add(documentDetails.getDetails());
+        }
+
         if (adapter == null) {
-            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, documentItemsWithDetails);
+            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, sortedDocumentItemsWithDetails);
             docListView.setAdapter(adapter);
         } else {
             adapter.clear();
-            adapter.addAll(documentItemsWithDetails);
+            adapter.addAll(sortedDocumentItemsWithDetails);
             adapter.notifyDataSetChanged();
         }
     }
+
+    private static class DocumentDetails {
+        private Date renewalDate;
+        private String details;
+
+        public DocumentDetails(Date renewalDate, String details) {
+            this.renewalDate = renewalDate;
+            this.details = details;
+        }
+
+        public Date getRenewalDate() {
+            return renewalDate;
+        }
+
+        public String getDetails() {
+            return details;
+        }
+    }
+
 
     private void showDeleteConfirmationDialog(final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -190,4 +237,5 @@ public class document extends AppCompatActivity {
         }
         return "";
     }
+
 }

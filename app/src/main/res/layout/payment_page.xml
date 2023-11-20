@@ -66,65 +66,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.051" />
 
-    <ImageButton
-        android:id="@+id/pyfilter"
-        android:layout_width="41dp"
-        android:layout_height="34dp"
-        android:adjustViewBounds="true"
-        android:background="@null"
-        android:contentDescription="NULL"
-        android:scaleType="centerInside"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.913"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.2"
-        app:srcCompat="@drawable/filter_btn" />
-
-    <ImageButton
-        android:id="@+id/imgBill"
-        android:layout_width="347dp"
-        android:layout_height="87dp"
-        android:adjustViewBounds="true"
-        android:background="@null"
-        android:contentDescription="NULL"
-        android:scaleType="centerInside"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ListView
+        android:id="@+id/paymentListView"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.328"
-        app:srcCompat="@drawable/payment_item_btn" />
-
-    <ImageButton
-        android:id="@+id/imageButton17"
-        android:layout_width="347dp"
-        android:layout_height="87dp"
-        android:adjustViewBounds="true"
-        android:background="@null"
-        android:contentDescription="NULL"
-        android:scaleType="centerInside"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.562"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/payment_item_btn" />
-
-    <ImageButton
-        android:id="@+id/imageButton18"
-        android:layout_width="347dp"
-        android:layout_height="87dp"
-        android:adjustViewBounds="true"
-        android:background="@null"
-        android:contentDescription="NULL"
-        android:scaleType="centerInside"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.684"
-        app:srcCompat="@drawable/payment_item_btn" />
+        app:layout_constraintTop_toBottomOf="@+id/pysearch" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

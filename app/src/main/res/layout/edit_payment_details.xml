@@ -22,10 +22,11 @@
         app:layout_constraintVertical_bias="0.774" />
 
     <EditText
-        android:id="@+id/editTextNumber7"
+        android:id="@+id/edpayaccnum"
         android:layout_width="205dp"
         android:layout_height="41dp"
         android:ems="10"
+        android:enabled="false"
         android:hint="Enter Account Number"
         android:inputType="number"
         android:textSize="16sp"
@@ -41,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/eb_garamond"
-        android:text="Acc Number"
+        android:text="Acc Number:"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -67,12 +68,13 @@
         app:layout_constraintVertical_bias="0.377" />
 
     <EditText
-        android:id="@+id/editTextDate6"
+        android:id="@+id/edremdate"
         android:layout_width="205dp"
         android:layout_height="40dp"
         android:layout_marginStart="167dp"
         android:layout_marginEnd="39dp"
         android:ems="10"
+        android:enabled="false"
         android:hint="Enter Reminder Date"
         android:inputType="date"
         android:textSize="16sp"
@@ -84,25 +86,11 @@
         app:layout_constraintVertical_bias="0.525" />
 
     <EditText
-        android:id="@+id/editTextText6"
+        android:id="@+id/edpaymethod"
         android:layout_width="207dp"
         android:layout_height="37dp"
         android:ems="10"
-        android:hint="is it Recurring"
-        android:inputType="text"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.818"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.855" />
-
-    <EditText
-        android:id="@+id/editTextText24"
-        android:layout_width="207dp"
-        android:layout_height="37dp"
-        android:ems="10"
+        android:enabled="false"
         android:hint="Enter the Mode of Payment"
         android:inputType="text"
         android:textSize="16sp"
@@ -129,21 +117,6 @@
         app:layout_constraintVertical_bias="0.532" />
 
     <TextView
-        android:id="@+id/textView41"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/eb_garamond"
-        android:text="Recurrance"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.156"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.846" />
-
-    <TextView
         android:id="@+id/textView42"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -159,10 +132,11 @@
         app:layout_constraintVertical_bias="0.438" />
 
     <EditText
-        android:id="@+id/editTextDate7"
+        android:id="@+id/edpaydate"
         android:layout_width="205dp"
         android:layout_height="40dp"
         android:ems="10"
+        android:enabled="false"
         android:hint="Enter Payment Date"
         android:inputType="date"
         android:textSize="16sp"
@@ -204,10 +178,11 @@
         app:layout_constraintVertical_bias="0.611" />
 
     <EditText
-        android:id="@+id/editTextText25"
+        android:id="@+id/edpayto"
         android:layout_width="204dp"
         android:layout_height="41dp"
         android:ems="10"
+        android:enabled="false"
         android:hint="Pay to"
         android:inputType="text"
         android:textSize="16sp"
@@ -219,10 +194,11 @@
         app:layout_constraintVertical_bias="0.286" />
 
     <EditText
-        android:id="@+id/editTextText26"
+        android:id="@+id/edpayfor"
         android:layout_width="205dp"
         android:layout_height="38dp"
         android:ems="10"
+        android:enabled="false"
         android:hint="Enter  reason of payment"
         android:inputType="text"
         android:textSize="16sp"
@@ -234,10 +210,11 @@
         app:layout_constraintVertical_bias="0.373" />
 
     <EditText
-        android:id="@+id/editTextNumber8"
+        android:id="@+id/edpayamt"
         android:layout_width="205dp"
         android:layout_height="41dp"
         android:ems="10"
+        android:enabled="false"
         android:hint="Enter Amount in RM"
         android:inputType="number"
         android:textSize="16sp"
@@ -266,23 +243,24 @@
 
     <TextView
         android:id="@+id/textView20"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="364dp"
+        android:layout_height="113dp"
         android:fontFamily="@font/rammetto_one"
         android:text="Edit Payment Details"
         android:textAlignment="center"
         android:textSize="35sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.094" />
+        app:layout_constraintVertical_bias="0.025" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/edpaysavebtn"
         android:layout_width="122dp"
         android:layout_height="41dp"
+        android:enabled="false"
         android:text="Save"
         android:textColor="#090909"
         app:backgroundTint="@android:color/transparent"
@@ -292,9 +270,79 @@
         app:layout_constraintHorizontal_bias="0.529"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.943"
+        app:layout_constraintVertical_bias="0.946"
         app:rippleColor="#33AAAAAA"
         app:strokeColor="#0E0E0E"
         app:strokeWidth="2dp" />
+
+    <TextView
+        android:id="@+id/textView36"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Notes:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.187"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.852" />
+
+    <EditText
+        android:id="@+id/edpaynote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:enabled="false"
+        android:hint="Enter notes"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.86" />
+
+    <TextView
+        android:id="@+id/textView41"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Payment Name:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.113"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.223" />
+
+    <EditText
+        android:id="@+id/edpayname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:enabled="false"
+        android:hint="Payment name"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.84"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.211" />
+
+    <ImageButton
+        android:id="@+id/edpaybtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.138"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

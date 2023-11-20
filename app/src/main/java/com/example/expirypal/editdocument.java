@@ -2,15 +2,18 @@ package com.example.expirypal; // Replace com.example.yourapp with your actual p
 
 import android.content.Intent;
 import android.app.DatePickerDialog;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -18,6 +21,7 @@ public class editdocument extends AppCompatActivity {
     private DatabaseHelper dbHelper; // Database helper for database operations
     private boolean isEditModeEnabled = false; // Flag to track if edit mode is enabled
     private String originalDocumentName; // Store the original document name
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,7 @@ public class editdocument extends AppCompatActivity {
 
         // Find the back button
         ImageButton edibk = findViewById(R.id.eddocback);
+
 
         edibk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +58,7 @@ public class editdocument extends AppCompatActivity {
         EditText eteditdn = findViewById(R.id.editTextNumber4); // Document Number
         EditText eteditsendto = findViewById(R.id.editTextText17); // Send To
         EditText eteditloc = findViewById(R.id.editTextText16); // Location Stored
-        EditText eteditnote = findViewById(R.id.editTextText15); // Notes
+        EditText eteditdocnotes = findViewById(R.id.editTextText15); // Notes
         //EditText eteditattach = findViewById(R.id.editTextText21); // Attachment
 
         // Populate the EditText fields with the retrieved data
@@ -63,9 +68,11 @@ public class editdocument extends AppCompatActivity {
         eteditdn.setText(details[3].replace("Document Number: ", ""));
         eteditsendto.setText(details[4].replace("Send To: ", ""));
         eteditloc.setText(details[5].replace("Location Stored: ", ""));
-        eteditnote.setText(details[6].replace("Notes: ", ""));
+        eteditdocnotes.setText(details[6].replace("Notes: ", ""));
         //eteditattach.setText(details[7].replace("Attachment: ", ""));
 
+        // Find the "Save" button
+        Button edisave = findViewById(R.id.button5);
         // Find the "Edit" button
         ImageButton edienedit = findViewById(R.id.edienedit);
 
@@ -73,11 +80,32 @@ public class editdocument extends AppCompatActivity {
         edienedit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if (isEditModeEnabled) {
+                    // Disable edit mode
+                    disableEditMode(etdnedit);
+                    disableEditMode(eteditrd);
+                    disableEditMode(eteditrem);
+                    disableEditMode(eteditdn);
+                    disableEditMode(eteditsendto);
+                    disableEditMode(eteditloc);
+                    disableEditMode(eteditdocnotes);
+                    edisave.setEnabled(false);
+                } else {
+                    // Enable edit mode
+                    enableEditMode(etdnedit);
+                    enableEditMode(eteditrd);
+                    enableEditMode(eteditrem);
+                    enableEditMode(eteditdn);
+                    enableEditMode(eteditsendto);
+                    enableEditMode(eteditloc);
+                    enableEditMode(eteditdocnotes);
+                    edisave.setEnabled(true);
+                }
                 // Toggle edit mode flag
                 isEditModeEnabled = !isEditModeEnabled;
 
-                // Enable or disable edit mode based on the flag
-                enableDisableEditMode(isEditModeEnabled, etdnedit, eteditrd, eteditrem, eteditdn, eteditsendto, eteditloc, eteditnote);
+
             }
         });
 
@@ -89,8 +117,14 @@ public class editdocument extends AppCompatActivity {
             }
         });
 
-        // Find the "Save" button
-        Button edisave = findViewById(R.id.button5);
+        eteditrem.setOnClickListener(new View.OnClickListener() {
+                                         @Override
+                                         public void onClick(View view) {
+                                             showDatePickerDialog(eteditrem);
+                                         }
+                                     });
+
+
 
         // Add a click listener to save the edited document details
         edisave.setOnClickListener(new View.OnClickListener() {
@@ -103,11 +137,12 @@ public class editdocument extends AppCompatActivity {
                 String documentNumber = eteditdn.getText().toString();
                 String sendTo = eteditsendto.getText().toString();
                 String locationStored = eteditloc.getText().toString();
-                String notes = eteditnote.getText().toString();
+                String docnotes = eteditdocnotes.getText().toString();
                 //String attachment = eteditattach.getText().toString();
 
+
                 // Update the document details in the database
-                boolean isUpdateSuccessful = dbHelper.updateDocumentDetails(originalDocumentName, documentName, renewalDate, reminder, documentNumber, sendTo, locationStored, notes);
+                boolean isUpdateSuccessful = dbHelper.updateDocumentDetails(originalDocumentName, documentName, renewalDate, reminder, documentNumber, sendTo, locationStored, docnotes);
 
                 if (isUpdateSuccessful) {
                     // Show a success message
@@ -135,7 +170,7 @@ public class editdocument extends AppCompatActivity {
             Calendar selectedDate = Calendar.getInstance();
             selectedDate.set(selectedYear, selectedMonth, selectedDay);
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy", Locale.US);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
             String formattedDate = dateFormat.format(selectedDate.getTime());
 
             editText.setText(formattedDate);
@@ -144,10 +179,13 @@ public class editdocument extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    // Enable or disable edit mode for EditText fields based on the flag
-    private void enableDisableEditMode(boolean isEditModeEnabled, EditText... editTexts) {
-        for (EditText editText : editTexts) {
-            editText.setEnabled(isEditModeEnabled);
-        }
+    // Enable edit mode for an EditText
+    private void enableEditMode(EditText editText) {
+        editText.setEnabled(true);
+    }
+
+    // Disable edit mode for an EditText
+    private void disableEditMode(EditText editText) {
+        editText.setEnabled(false);
     }
 }

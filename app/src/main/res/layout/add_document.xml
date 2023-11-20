@@ -6,6 +6,34 @@
     android:layout_height="match_parent"
     android:background="@drawable/image">
 
+    <ListView
+        android:id="@+id/docfilesListView"
+        android:layout_width="248dp"
+        android:layout_height="37dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.86" />
+
+    <Button
+        android:id="@+id/addDocFileBtn"
+        style="@style/Widget.Material3.Button"
+        android:layout_width="124dp"
+        android:layout_height="37dp"
+        android:backgroundTint="@color/white"
+        android:text="Add"
+        android:textColor="@color/black"
+        app:icon="@android:drawable/ic_menu_add"
+        app:iconTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.606"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.782" />
+
     <ImageButton
         android:id="@+id/addocback"
         android:layout_width="52dp"
@@ -259,17 +287,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.424" />
-
-    <androidx.constraintlayout.utils.widget.MockView
-        android:id="@+id/mockView2"
-        android:layout_width="233dp"
-        android:layout_height="105dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.91"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.867" />
 
     <EditText
         android:id="@+id/editTextText4"

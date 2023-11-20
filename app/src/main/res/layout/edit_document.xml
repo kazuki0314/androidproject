@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     android:background="@drawable/image">
 
+    <ListView
+        android:id="@+id/doceditfilesListView"
+        android:layout_width="248dp"
+        android:layout_height="37dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.86" />
+
     <ImageButton
         android:id="@+id/eddocback"
         android:layout_width="52dp"
@@ -61,6 +72,7 @@
         android:layout_width="189dp"
         android:layout_height="36dp"
         android:ems="10"
+        android:enabled="false"
         android:hint="Enter Notes"
         android:inputType="text"
         android:textSize="15sp"
@@ -76,6 +88,7 @@
         android:layout_width="195dp"
         android:layout_height="40dp"
         android:ems="10"
+        android:enabled="false"
         android:hint="Enter Document Name"
         android:inputType="text"
         android:textSize="15sp"
@@ -91,6 +104,7 @@
         android:layout_width="188dp"
         android:layout_height="36dp"
         android:ems="10"
+        android:enabled="false"
         android:hint="Enter Storage point"
         android:inputType="text"
         android:textSize="15sp"
@@ -106,6 +120,7 @@
         android:layout_width="193dp"
         android:layout_height="36dp"
         android:ems="10"
+        android:enabled="false"
         android:hint="Enter Renewal Date"
         android:inputType="date"
         android:textSize="15sp"
@@ -121,6 +136,7 @@
         android:layout_width="191dp"
         android:layout_height="38dp"
         android:ems="10"
+        android:enabled="false"
         android:hint="Reminder Date"
         android:inputType="text"
         android:textSize="15sp"
@@ -136,6 +152,7 @@
         android:layout_width="188dp"
         android:layout_height="41dp"
         android:ems="10"
+        android:enabled="false"
         android:hint="Enter Reciever's Name"
         android:inputType="text"
         android:textSize="15sp"
@@ -151,6 +168,7 @@
         android:layout_width="192dp"
         android:layout_height="39dp"
         android:ems="10"
+        android:enabled="false"
         android:hint="Enter Document No."
         android:inputType="number"
         android:textSize="15sp"

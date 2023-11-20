@@ -47,11 +47,16 @@
         <activity android:name=".paymentdetails" />
         <activity android:name=".addpayment" />
         <activity android:name=".editpayment" />
-        <activity android:name=".document" />
+        <activity
+            android:name=".document"
+            android:windowSoftInputMode="adjustPan"
+            />
         <activity android:name=".documentdetails" />
         <activity android:name=".adddocument" />
         <activity android:name=".editdocument" />
         <activity android:name=".DetailActivity" />
+        <receiver android:name=".ReminderReceiverDocument" />
+        <receiver android:name=".ReminderReceiverPayment" />
         <receiver android:name=".ReminderReceiver" />
 
 
