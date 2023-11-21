@@ -43,6 +43,8 @@
         android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="Search"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/black"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.565"
@@ -53,6 +55,7 @@
         android:id="@+id/docListView"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/docsearch" />
