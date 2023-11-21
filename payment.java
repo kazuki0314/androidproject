@@ -14,7 +14,14 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import java.text.SimpleDateFormat;
 import androidx.appcompat.app.AppCompatActivity;
+import java.util.Collections;
+import java.text.ParseException;
+import java.util.Comparator;
+
+import java.util.Date;
+
 
 import java.util.ArrayList;
 
@@ -117,7 +124,7 @@ public class payment extends AppCompatActivity {
     }
 
     private void refreshPaymentList() {
-        ArrayList<String> paymentItemsWithDetails = new ArrayList<>();
+        ArrayList<PaymentDetails> paymentItemsWithDetails = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String currentDate = DatabaseHelper.getCurrentDate();
@@ -142,9 +149,7 @@ public class payment extends AppCompatActivity {
             String payMethod = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_PAYMETHOD));
             String payNote = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_PAYNOTE));
 
-            // Check if the payment is near expiry and add to the list
-            if (DatabaseHelper.isDateNearExpiry(currentDate, payDate)) {
-                String details = "Payment Name: " + paymentName +
+            String details = "Payment Name: " + paymentName +
                         "\nPay To: " + payTo +
                         "\nPay For: " + payFor +
                         "\nDate: " + payDate +
@@ -154,22 +159,59 @@ public class payment extends AppCompatActivity {
                         "\nPayment Method: " + payMethod +
                         "\nNotes: " + payNote;
 
-                paymentItemsWithDetails.add(details);
+            // Convert renewalDate to Date for sorting
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Date renewalDateObj = dateFormat.parse(payDate);
+                paymentItemsWithDetails.add(new PaymentDetails(renewalDateObj, details));
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
+
         }
 
         cursor.close();
         db.close();
 
+        // Sort documents by renewal date
+        Collections.sort(paymentItemsWithDetails, new Comparator<PaymentDetails>() {
+            @Override
+            public int compare(PaymentDetails d1, PaymentDetails d2) {
+                return d1.getRenewalDate().compareTo(d2.getRenewalDate());
+            }
+        });
+
+        // Convert back to String for display
+        ArrayList<String> sortedpaymentItemsWithDetails = new ArrayList<>();
+        for (PaymentDetails paymentDetails : paymentItemsWithDetails) {
+            sortedpaymentItemsWithDetails.add(paymentDetails.getDetails());
+        }
+
         if (adapter == null) {
-            // Initialize the adapter if it's null
-            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, paymentItemsWithDetails);
+            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, sortedpaymentItemsWithDetails);
             paymentListView.setAdapter(adapter);
         } else {
-            // Update the adapter with the new data
             adapter.clear();
-            adapter.addAll(paymentItemsWithDetails);
+            adapter.addAll(sortedpaymentItemsWithDetails);
             adapter.notifyDataSetChanged();
+        }
+    }
+
+    private static class PaymentDetails {
+        private Date payDate;
+        private String details;
+
+        public PaymentDetails(Date payDate, String details) {
+            this.payDate = payDate;
+            this.details = details;
+        }
+
+        public Date getRenewalDate() {
+            return payDate;
+        }
+
+        public String getDetails() {
+            return details;
         }
     }
 
