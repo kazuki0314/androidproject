@@ -10,10 +10,14 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import android.content.Context;
+import android.graphics.Color;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class faq extends AppCompatActivity {
     private ListView faqListView;
-    private ArrayAdapter<String> faqAdapter;
+    private CustomArrayAdapter faqAdapter;
     private String[] faqItems;
     private String[] itemDetails;
 
@@ -46,7 +50,7 @@ public class faq extends AppCompatActivity {
         };
 
         // リストビューにアイテムを追加するためのアダプターを作成
-        faqAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, faqItems);
+        faqAdapter = new CustomArrayAdapter(this, android.R.layout.simple_list_item_1, faqItems);
 
         // リストビューにアダプターを設定
         faqListView.setAdapter(faqAdapter);
@@ -87,5 +91,21 @@ public class faq extends AppCompatActivity {
                 startActivity(helpintent);
             }
         });
+    }
+
+    private class CustomArrayAdapter extends ArrayAdapter<String> {
+        public CustomArrayAdapter(Context context, int resource, String[] objects) {
+            super(context, resource, objects);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View view = super.getView(position, convertView, parent);
+
+            // Set the text color to black
+            ((TextView) view).setTextColor(Color.BLACK);
+
+            return view;
+        }
     }
 }

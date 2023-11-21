@@ -14,19 +14,23 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import java.util.ArrayList;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import android.content.Context;
+import android.graphics.Color;
 
 public class document extends AppCompatActivity {
     private ListView docListView;
     private DatabaseHelper dbHelper2;
-    private ArrayAdapter<String> adapter;
+    private CustomArrayAdapter adapter;
 
     private static final int ADD_DOCUMENT_REQUEST = 1; // Request code for adding documents
 
@@ -168,7 +172,7 @@ public class document extends AppCompatActivity {
         }
 
         if (adapter == null) {
-            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, sortedDocumentItemsWithDetails);
+            adapter = new CustomArrayAdapter(this, android.R.layout.simple_list_item_1, sortedDocumentItemsWithDetails);
             docListView.setAdapter(adapter);
         } else {
             adapter.clear();
@@ -195,6 +199,21 @@ public class document extends AppCompatActivity {
         }
     }
 
+    private class CustomArrayAdapter extends ArrayAdapter<String> {
+        public CustomArrayAdapter(Context context, int resource, List<String> objects) {
+            super(context, resource, objects);
+        }
+
+        @Override
+        public View getView(int position, View convertView, android.view.ViewGroup parent) {
+            View view = super.getView(position, convertView, parent);
+
+            // Set the text color to black
+            ((TextView) view).setTextColor(getResources().getColor(android.R.color.black));
+
+            return view;
+        }
+    }
 
     private void showDeleteConfirmationDialog(final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -237,5 +256,4 @@ public class document extends AppCompatActivity {
         }
         return "";
     }
-
 }
