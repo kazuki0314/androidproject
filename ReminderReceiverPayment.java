@@ -11,31 +11,31 @@ import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
 
-public class ReminderReceiverDocument extends BroadcastReceiver {
+public class ReminderReceiverPayment extends BroadcastReceiver {
 
-    private static final String CHANNEL_ID = "DocumentReminderChannel";
+    private static final String CHANNEL_ID = "ReminderChannel";
 
     @Override
     public void onReceive(Context context, Intent intent) {
         // Retrieve additional data if needed
-        String documentName = intent.getStringExtra("document_name");
+        String paymentName = intent.getStringExtra("payment_name");
 
         // Handle the reminder here (e.g., show a notification)
-        showNotification(context, documentName);
+        showNotification(context, paymentName);
     }
 
-    private void showNotification(Context context, String documentName) {
+    private void showNotification(Context context, String paymentName) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         // Create a notification channel for devices running Android Oreo and above
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(
                     CHANNEL_ID,
-                    "Document Reminder Channel",
+                    "Reminder Channel",
                     NotificationManager.IMPORTANCE_DEFAULT
             );
             channel.enableLights(true);
-            channel.setLightColor(Color.BLUE);
+            channel.setLightColor(Color.GREEN);
             channel.enableVibration(true);
             notificationManager.createNotificationChannel(channel);
         }
@@ -43,8 +43,8 @@ public class ReminderReceiverDocument extends BroadcastReceiver {
         // Build the notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.expired)
-                .setContentTitle("Document Reminder")
-                .setContentText("Don't forget about " + documentName)
+                .setContentTitle("Payment Reminder")
+                .setContentText("Don't forget about " + paymentName)
                 .setAutoCancel(true);
 
         // Show the notification

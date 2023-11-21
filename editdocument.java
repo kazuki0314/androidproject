@@ -71,6 +71,8 @@ public class editdocument extends AppCompatActivity {
         eteditdocnotes.setText(details[6].replace("Notes: ", ""));
         //eteditattach.setText(details[7].replace("Attachment: ", ""));
 
+        // Find the "Save" button
+        Button edisave = findViewById(R.id.button5);
         // Find the "Edit" button
         ImageButton edienedit = findViewById(R.id.edienedit);
 
@@ -78,11 +80,32 @@ public class editdocument extends AppCompatActivity {
         edienedit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if (isEditModeEnabled) {
+                    // Disable edit mode
+                    disableEditMode(etdnedit);
+                    disableEditMode(eteditrd);
+                    disableEditMode(eteditrem);
+                    disableEditMode(eteditdn);
+                    disableEditMode(eteditsendto);
+                    disableEditMode(eteditloc);
+                    disableEditMode(eteditdocnotes);
+                    edisave.setEnabled(false);
+                } else {
+                    // Enable edit mode
+                    enableEditMode(etdnedit);
+                    enableEditMode(eteditrd);
+                    enableEditMode(eteditrem);
+                    enableEditMode(eteditdn);
+                    enableEditMode(eteditsendto);
+                    enableEditMode(eteditloc);
+                    enableEditMode(eteditdocnotes);
+                    edisave.setEnabled(true);
+                }
                 // Toggle edit mode flag
                 isEditModeEnabled = !isEditModeEnabled;
 
-                // Enable or disable edit mode based on the flag
-                enableDisableEditMode(isEditModeEnabled, etdnedit, eteditrd, eteditrem, eteditdn, eteditsendto, eteditloc, eteditdocnotes);
+
             }
         });
 
@@ -101,8 +124,7 @@ public class editdocument extends AppCompatActivity {
                                          }
                                      });
 
-        // Find the "Save" button
-        Button edisave = findViewById(R.id.button5);
+
 
         // Add a click listener to save the edited document details
         edisave.setOnClickListener(new View.OnClickListener() {
@@ -157,10 +179,13 @@ public class editdocument extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    // Enable or disable edit mode for EditText fields based on the flag
-    private void enableDisableEditMode(boolean isEditModeEnabled, EditText... editTexts) {
-        for (EditText editText : editTexts) {
-            editText.setEnabled(isEditModeEnabled);
-        }
+    // Enable edit mode for an EditText
+    private void enableEditMode(EditText editText) {
+        editText.setEnabled(true);
+    }
+
+    // Disable edit mode for an EditText
+    private void disableEditMode(EditText editText) {
+        editText.setEnabled(false);
     }
 }
